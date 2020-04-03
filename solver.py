@@ -87,7 +87,6 @@ def shortest_path_optmized(start, end):
             visitedstart.add(curr)
         if curr in visitedend and curr in visitedstart:
             f = 1
-            print("Start wale se")
             break
 
         if endq:
@@ -141,8 +140,8 @@ path = shortest_path((6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12,
 end  = time.time()
 
 
-print("PATH:"+str(path))
-print("time in secs:" + str(end - start))
+print("PATH found by normal bfs:"+str(path))
+print("time in secs by normal bfs:" + str(end - start))
 
 
 start = time.time()
@@ -150,5 +149,5 @@ path = shortest_path_optmized((6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2
 end  = time.time()
 
 
-print("PATH:"+str(path))
-print("time in secs:" + str(end - start))
+print("PATH found by bidirectional bfs:"+str(path))
+print("time in secs by bidirectional bfs:" + str(end - start))
