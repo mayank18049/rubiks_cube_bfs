@@ -1,3 +1,4 @@
+Mayank Rawat 2018049 Vishwesh Kumar 2018119
 Time taken for :
 1 way bfs 
 PATH:['F', 'F', 'L', 'L', 'Ui', 'F', 'U', 'F', 'L', 'U', 'U', 'Fi', 'Ui', 'L']
@@ -15,7 +16,7 @@ At the same time
 Number of nodes visited by 2 way bfs :
 1+2*6+2*6*6+2*(6*6*6).....+2*(6**(k/2))
 
-As we can see , as the distance increases , k increases ,and hence the number of computations in 1 way bfs increases in order of 6**(k/2) instead of 6**(k)
+As we can see , as the distance increases , k increases ,and hence the number of computations in 2 way bfs increases in order of 6**(k/2) instead of 6**(k)
 
 Hence , the larger the distance , the better 2 way bfs will perform 
 
