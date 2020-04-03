@@ -56,10 +56,88 @@ def shortest_path_optmized(start, end):
     You can use the rubik.quarter_twists move set.
     Each move can be applied using rubik.perm_apply
     """
-    raise NotImplementedError
+    startparent = {}
+    endparent = {}
+    visitedstart = set()
+    visitedend = set()
+    startq = deque()
+    startq.append(start)
+    endq = deque()
+    endq.append(end)
+    startdist = {start: 0}
+    enddist = {end: 0}
+    f = 0
+    while startq or endq:
+        if startq:
+            curr = startq.popleft()
+
+            for move in rubik.quarter_twists:
+                neigh = rubik.perm_apply(move, curr)
+                if neigh in startdist.keys():
+                    if startdist[neigh] > startdist[curr] + 1:
+                        startdist[neigh] = startdist[curr] + 1
+                        startparent[neigh] = tuple([curr, move])
+                        startq.append(neigh)
+                else:
+                    startdist[neigh] = startdist[curr] + 1
+                    startparent[neigh] = tuple([curr, move])
+                    startq.append(neigh)
+            visitedstart.add(curr)
+
+        if endq:
+            curr = endq.popleft()
+            for move in rubik.quarter_twists:
+                neigh = rubik.perm_apply(move, curr)
+                if neigh in enddist.keys():
+                    if enddist[neigh] > enddist[curr] + 1:
+                        enddist[neigh] = enddist[curr] + 1
+                        endparent[neigh] = tuple([curr, move])
+                        endq.append(neigh)
+
+                else:
+                    enddist[neigh] = enddist[curr] + 1
+                    endparent[neigh] = tuple([curr, move])
+                    endq.append(neigh)
+            visitedend.add(curr)
+
+        # check if visited
+        if curr in visitedend and curr in visitedstart:
+            f = 1
+            break
+    if f:
+        print(start)
+        print(curr)
+        print(end)
+        movestostart = [rubik.quarter_twists_names[startparent[curr][1]]]
+        parent = startparent[curr][0]
+        while (parent != start):
+            movestostart.append(rubik.quarter_twists_names[startparent[parent][1]])
+            parent = startparent[parent][0]
+        movestoend = []
+        if curr != end:
+            print(curr)
+            movestoend = [rubik.quarter_twists_names[rubik.quarter_twists_inverse[endparent[curr][1]]]]
+            parent = endparent[curr][0]
+            while (parent != end):
+                movestostart.append(rubik.quarter_twists_names[rubik.quarter_twists_inverse[startparent[parent][1]]])
+                parent = movestoend[parent][0]
+        print(movestostart[::-1] + movestoend)
+
+
 
 start = timeit.timeit()
 path = shortest_path((6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23),(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23))
 end  = timeit.timeit()
+
+
+print("PATH:"+str(path))
+print("time in secs:" + str(end - start))
+
+
+start = timeit.timeit()
+path = shortest_path_optmized((6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23),(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23))
+end  = timeit.timeit()
+
+
 print("PATH:"+str(path))
 print("time in secs:" + str(end - start))
