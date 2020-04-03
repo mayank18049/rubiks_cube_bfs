@@ -2,6 +2,8 @@ import rubik
 from rubik import *
 import time
 from collections import deque
+
+
 def shortest_path(start, end):
     """
     For Question 1, using BFS, finds the shortest path from start_position to
@@ -9,10 +11,10 @@ def shortest_path(start, end):
 
     You can use the rubik.quarter_twists move set.
     Each move can be applied using rubik.perm_apply
-    """ 
+    """
     visited = {}
-    
-    visited[start] = (start,-1)
+
+    visited[start] = (start, -1)
     config = []
     nodes = deque()
     nodes.append(start)
@@ -22,31 +24,27 @@ def shortest_path(start, end):
             break
         else:
             for i in rubik.quarter_twists:
-                temp_node = rubik.perm_apply(node,i)
-                if (not(visited.__contains__(temp_node))):
-                    visited[temp_node]=(node,rubik.quarter_twists_names[i])
+                temp_node = rubik.perm_apply(node, i)
+                if (not (visited.__contains__(temp_node))):
+                    visited[temp_node] = (node, rubik.quarter_twists_names[i])
                     nodes.append(temp_node)
                 else:
                     continue
-                    
 
-    if(len(visited)==1):
+    if (len(visited) == 1):
         return []
-    if(visited.__contains__(end)):
+    if (visited.__contains__(end)):
         rev_config = deque()
         config = []
         temp_node = end
-        while (temp_node!= start):
-            temp_node,temp = visited[temp_node]
+        while (temp_node != start):
+            temp_node, temp = visited[temp_node]
             rev_config.append(temp)
-        while(rev_config):
+        while (rev_config):
             config.append(rev_config.pop())
         return config
     else:
         return None
-
-
-    
 
 
 def shortest_path_optmized(start, end):
@@ -57,7 +55,7 @@ def shortest_path_optmized(start, end):
     You can use the rubik.quarter_twists move set.
     Each move can be applied using rubik.perm_apply
     """
-    if start==end:return []
+    if start == end: return []
     startparent = {}
     endparent = {}
     visitedstart = set()
@@ -134,20 +132,21 @@ def shortest_path_optmized(start, end):
         return movestostart[::-1] + movestoend
 
 
+# start = time.time()
+# path = shortest_path((6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23),
+#                      (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23))
+# end = time.time()
+#
+# print("PATH found by normal bfs:" + str(path))
+# print("time in secs by normal bfs:" + str(end - start))
+#
+# start = time.time()
+# path = shortest_path_optmized((6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23),
+#                               (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23))
+# end = time.time()
 
-start = time.time()
-path = shortest_path((6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23),(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23))
-end  = time.time()
-
-
-print("PATH found by normal bfs:"+str(path))
-print("time in secs by normal bfs:" + str(end - start))
-
-
-start = time.time()
-path = shortest_path_optmized((6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23),(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23))
-end  = time.time()
-
-
-print("PATH found by bidirectional bfs:"+str(path))
-print("time in secs by bidirectional bfs:" + str(end - start))
+# print("PATH found by bidirectional bfs:" + str(path))
+# print("time in secs by bidirectional bfs:" + str(end - start))
+print(
+    shortest_path_optmized(start=(7, 8, 6, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23),
+                           end=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23)))
